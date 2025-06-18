@@ -1,12 +1,24 @@
 function autoChangeImage() {
-    //Take list of image that have class = preview
     let imgArr = document.getElementsByClassName("preview");
-
-    //Take target 
     let imgTarget = document.getElementById("image");
 
-    for (let element of imgArr) {
-        imgTarget.style.backgroundImage = 'url("' + element.src + '")';
-        imgTarget.innerText = element.alt;
-    };
+    // Sleep delay
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    // Hàm async chạy slideshow
+    async function runSlideshow() {
+        while (true) { // Lặp vô hạn
+            for (let element of imgArr) {
+                imgTarget.style.backgroundImage = 'url("' + element.src + '")';
+                imgTarget.innerText = element.alt;
+                await sleep(2000); // đợi 2 giây
+            }
+        }
+    }
+
+    runSlideshow(); // gọi hàm để bắt đầu
 }
+
+window.onload = autoChangeImage;
